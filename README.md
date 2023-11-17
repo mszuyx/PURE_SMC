@@ -1,3 +1,5 @@
 The official implementation of PURE shared-control algrorithm.
-![image](https://github.com/mszuyx/PURE_SMC/assets/37651144/9227d1a8-2bd3-4add-b43b-0a7e4c405048)
-![image](https://github.com/mszuyx/PURE_SMC/assets/37651144/eac8bcae-b7e4-4975-aa09-aa6e2453751d)
+![image](https://github.com/mszuyx/PURE_SMC/assets/37651144/e21ddcaa-7896-40c9-86a5-a5b244ac8c43)
+
+![image](https://github.com/mszuyx/PURE_SMC/assets/37651144/eb7b0ea5-2b3e-47ce-bbc7-fb11ee40fb7c)
+
