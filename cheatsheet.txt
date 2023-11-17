@@ -1,0 +1,10 @@
+
+roslaunch mux_seg lidar_only.launch
+
+roslaunch pure_smc test.launch
+
+ls -al /dev/tty*
+
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
+
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM1 _baud:=115200

@@ -1,0 +1,59 @@
+<launch>
+  <!-- Launch the sound_play node -->
+  <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py"/>
+ 
+  <include file="$(find ds4_driver)/launch/ds4_driver.launch" >
+    <arg name="addr" value="" />
+    <arg name="use_standard_msgs" value="true" />
+  </include>
+ 
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py">
+    <param name="port" value="/dev/ttyACM0"/> <!-- or ttyACM1 if fail-->
+    <param name="baud" value="230400" /> <!--115200-->
+  </node>
+  
+   <node pkg="robot_odom" type="robot_odom" name="robot_odom" output="screen">
+    <param name="base_FrameId" 				value ="/base_link" />
+    <param name="odom_FrameId" 				value ="/odom" />
+    <param name="odom_topic"              type = "string"     value = "/roboRIO/odom" />
+    <param name="ball_radius"             type = "double"     value = "0.1143"/>
+  </node>
+ 
+  <include file="$(find mux_seg)/launch/full_sensor_mux_seg.launch" ></include>
+ 
+   <!-- Launch the smc node -->
+  <node pkg="pure_smc" type="pure_smc" name="pure_smc" output="screen">
+    <?ignore
+    <param name="max_speed"                 type = "double"     value = "0.8"/> <!-- 0.8 m/s for remote SPEED -->
+    <param name="ball_radius"               type = "double"     value = "0.1143"/>
+    
+    <param name="hri_mode"                  type = "int"        value = "3"/>   <!--hri_mode 1: imu, hri_mode 2: fss, hri_mode 3: imu+fss, -->
+    <param name="hri_range_imu"             type = "double"     value = "25"/>  <!--25 deg -->
+    <param name="hri_range_yaw_ccw"         type = "double"     value = "17"/>  <!--17 deg -->
+    <param name="hri_range_yaw_cw"          type = "double"     value = "30"/>  <!--30 deg -->
+    <param name="hri_range_fss"             type = "double"     value = "70"/>  <!--70 Nm -->
+    <param name="cmd_fuse"                  type = "double"     value = "0.7"/> <!-- 70% FSS 30% IMU-->
+    
+    <param name="eta"                       type = "double"     value = "5.0"/> <!-- 8.0 for bench test --> <!-- 5.0 for human test -->
+    <param name="zeta"                      type = "double"     value = "2.5"/> <!-- 3.0, 0.8 for bench test --> <!-- 2.5 for human test -->
+    <param name="epsilon"                   type = "double"     value = "0.8"/>
+    <param name="dist_thre_spin"            type = "double"     value = "0.35"/> <!-- 0.35 -->
+    <param name="alarm_thre_upper"          type = "double"     value = "0.55"/>
+    <param name="alarm_thre_lower"          type = "double"     value = "0.3"/>
+    ?>
+    
+    <param name="sample_size"               type = "double"     value = "0.4"/> <!-- 0.8 m default -->
+    <param name="robot_radius"              type = "double"     value = "0.3"/> <!-- ??? -->
+    <param name="dist_thre_upper"           type = "double"     value = "2.0"/>
+    <param name="dist_thre_lower"           type = "double"     value = "0.35"/>
+    <param name="dist_thre_padding"         type = "double"     value = "0.2"/>
+    
+    <param name="smc_mode"                  type = "int"        value = "0"/>
+    <param name="loop_rate"                 type = "int"        value = "400"/> <!--400 Hz max -->
+    <param name="dead_zone"                 type = "double"     value = "0.05"/>
+    
+    <param name="self_test_coef"            type = "double"     value = "-0.5"/>
+    <param name="debug"                     type = "bool"       value = "true"/>
+  </node>
+  
+</launch>

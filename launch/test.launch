@@ -1,0 +1,20 @@
+<launch>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="camera_to_base_link" args="0 0 0 0 0 0 1 /base_link /d455_link 1000" /> -->
+  
+ <include file="$(find ds4_driver)/launch/ds4_driver.launch" >
+   <arg name="addr" value="" />
+   <arg name="use_standard_msgs" value="true" />
+ </include>
+ 
+  <!-- Launch the smc node -->
+  <node pkg="pure_smc" type="pure_smc" name="pure_smc" output="screen">
+    <param name="smc_mode"                  type = "int"        value = "1"/>
+    <param name="dead_zone"                 type = "double"     value = "0.05"/>
+    <param name="debug"                     type = "bool"       value = "true"/>
+    <param name="sample_size"               type = "int"        value = "60"/>
+    <param name="dist_thre_upper"           type = "double"     value = "1.0"/>
+    <param name="dist_thre_lower"           type = "double"     value = "0.5"/>
+    <param name="max_speed"                 type = "double"     value = "3.0"/>
+  </node>
+  
+</launch>
